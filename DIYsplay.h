@@ -82,6 +82,8 @@ class DIYsplay {
         DIYsplay();
 
         void DIYsplay::begin();
+
+        void DIYsplay::begin(Stream);
         
         void DIYsplay::setScreen(int);
 

@@ -1,5 +1,23 @@
+#ifndef _DIYSPLAY_H_
+#define _DIYSPLAY_H_
+#endif
+
 //Ensure includes directory is okay
 #include "MatesController.h"
+#include "SoftwareSerial.h"
+
+#define DEFAULT_SIG_PIN 3
+#define DEFAULT_RESET_PIN 4
+
+//Please UNCOMMENT this line if you wish to use AltSoftSerial.
+//#include "AltSoftSerial.h"
+
+//This is an enumerated list that corresponds with the gauges programmed onto the DIYsplay.
+//The end-user enters the Enum directory which is implicitly casted to an Page number
+//corresponding with the correct Page on the display unit.
+//
+//The only downside of this method is that the order is completely arbitrary and does not
+//hold up to inserting displays in the middle of the array.
 
 typedef enum {
     DIYSPLAY_LOGO,
@@ -77,16 +95,44 @@ typedef enum {
     WAVE_STAT_DISPLAY,
 } Screen;
 
+
+
 class DIYsplay {
     public:
         DIYsplay();
 
-        void DIYsplay::begin();
-
-        void DIYsplay::begin(Stream);
+        //Simple constructor. Assumes we're using the regular hardware serial on the
+        //standard pin layout.
+        void begin();
         
-        void DIYsplay::setScreen(int);
+        //More advanced constructors with additional configurations if needed.
+        void begin(HardwareSerial &serial,
+             uint8_t sigPin = DEFAULT_SIG_PIN,
+             uint8_t resetPin = DEFAULT_RESET_PIN);
+        
+        //Only allow this constructor to be used if Software Serial is defined.
+        #ifdef SoftwareSerial_h
+        void begin(SoftwareSerial &serial, 
+             uint8_t sigPin = DEFAULT_SIG_PIN,
+             uint8_t resetPin = DEFAULT_RESET_PIN);
+        #endif
 
+        //Only allow this constructor to be used if AltSoftSerial is defined.
+        //  Note that because it is NOT included by default in the Arduino IDE,
+        //  you must install it from the Library Manager and uncomment the define
+        //  line at the top of this file.
+        #ifdef AltSoftSerial_h
+        void begin(AltSoftSerial &serial, 
+             uint8_t sigPin = DEFAULT_SIG_PIN, 
+             uint8_t resetPin = DEFAULT_RESET_PIN);
+        #endif
+        
+        
+        void setScreen(int);
+
+        // We're re-initializing this instance when the DIYsplay::begin() method
+        // is called because Mates doesn't have a default constructor.
+        // We set the correct parameters there.
         MatesController mates = MatesController(Serial);
         int currentScreen;
 
@@ -96,20 +142,15 @@ class DIYsplay {
         void printText(String);
         void clearText();
 
-
         uint8_t getNumWidgets(Screen);
 
     private:
+
+        //Initializes interface with MatesController
+        void init();
         uint8_t widgetLengths[74];
+
+        uint8_t sigPin;
+        uint8_t resetPin;
 };
-
-
-
-//This is an enumerated list that corresponds with the gauges programmed onto the DIYsplay.
-//The end-user enters the Enum directory which is implicitly casted to an Page number
-//corresponding with the correct Page on the display unit.
-//
-//The only downside of this method is that the order is completely arbitrary and does not
-//hold up to inserting displays in the middle of the array.
-
 

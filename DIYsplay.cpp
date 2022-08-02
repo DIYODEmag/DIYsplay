@@ -4,12 +4,48 @@ DIYsplay::DIYsplay() {
 
 }
 
-void DIYsplay::begin() {
+void DIYsplay::init() {
     //Init for communication with the display
-    pinMode(3, OUTPUT);
-    digitalWrite(3, HIGH);
+    pinMode(DIYsplay::sigPin, OUTPUT);
+    digitalWrite(DIYsplay::sigPin, HIGH);
     mates.begin();
 }
+
+void DIYsplay::begin() {
+    //Init for communication with the display
+    //Since the Mates constructor must be called on initialization (in the header file),
+    //we need to re-initialize it here unfortunately. There is no processing code
+    //called directly from the begin() method so it's not a huge deal.
+    DIYsplay::sigPin = DEFAULT_SIG_PIN;
+    DIYsplay::resetPin = DEFAULT_RESET_PIN;
+    mates = MatesController(Serial, resetPin);
+    DIYsplay::init();
+}
+
+void DIYsplay::begin(HardwareSerial &serial, uint8_t sigPin, uint8_t resetPin) {
+    DIYsplay::sigPin = sigPin;
+    DIYsplay::resetPin = resetPin;
+    mates = MatesController(serial, resetPin);
+    DIYsplay::init();
+}
+
+#ifdef SoftwareSerial_h
+void DIYsplay::begin(SoftwareSerial &serial, uint8_t sigPin, uint8_t resetPin) {
+    DIYsplay::sigPin = sigPin;
+    DIYsplay::resetPin = resetPin;
+    mates = MatesController(serial, resetPin);
+    DIYsplay::init();
+}
+#endif
+
+#ifdef AltSoftSerial_h
+void DIYsplay::begin(AltSoftSerial &serial, uint8_t sigPin, uint8_t resetPin) {
+    DIYsplay::sigPin = sigPin;
+    DIYsplay::resetPin = resetPin;
+    mates = MatesController(serial, resetPin);
+    DIYsplay::begin();
+}
+#endif
 
 void DIYsplay::setScreen(int page) {
     mates.setPage(page);

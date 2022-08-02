@@ -1,3 +1,9 @@
+/*
+ * DIYsplay.cpp
+ * Author: Liam Davies (l.davies@diyodemag.com)
+ * Copyright (c) 2022 DIYODE Magazine
+ */
+
 #include "DIYsplay.h"
 
 DIYsplay::DIYsplay() {

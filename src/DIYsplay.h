@@ -1,3 +1,9 @@
+/*
+ * DIYsplay.h
+ * Author: Liam Davies (l.davies@diyodemag.com)
+ * Copyright (c) 2022 DIYODE Magazine
+ */
+
 #ifndef _DIYSPLAY_H_
 #define _DIYSPLAY_H_
 #endif
@@ -10,7 +16,7 @@
 #define DEFAULT_RESET_PIN 4
 
 //Please UNCOMMENT this line if you wish to use AltSoftSerial.
-//#include "AltSoftSerial.h"
+#include "AltSoftSerial.h"
 
 //This is an enumerated list that corresponds with the gauges programmed onto the DIYsplay.
 //The end-user enters the Enum directory which is implicitly casted to an Page number

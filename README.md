@@ -4,6 +4,20 @@
 # DIYsplay
 DIYsplay is a simple LCD screen module that makes it easy to display information on over 70 different screens.
 
+## Getting Started
+You'll first need to connect the DIYsplay to your Arduino board, which needs four data pins and two power pins. For a basic connection, we recommend these pins:
+
+|               | Arduino Pin |   | DIYsplay Pin |
+|---------------|-------------|---|--------------|
+| **5V Power**  | 5V          | → | 5V           |
+| **Ground**    | GND         | → | G            |
+| **RX Line**   | RX (Pin 0)  | → | SW           |
+| **TX Line**   | TX (Pin 1)  | → | RX           |
+| **Sig Pin**   | D3 (Pin 3)  | → | SIG          |
+| **Reset Pin** | D4 (Pin 4)  | → | RES          |
+
+If you've made sure everything is in the right spot, feel free to turn on your Arduino and ensure that the DIYsplay logo appears on the DIYsplay. Great, let's write some code!
+
 ## Basic Usage
 DIYsplay has been built to make displaying your information of choice as simple as possible. For example, to build a digital clock that shows 04:30, the following code is all that is needed.
 
@@ -27,7 +41,7 @@ The most popular Arduino-compatible boards (the Uno and the Nano), along with ma
 
 The DIYsplay library, by default, uses this hardware serial line to talk to the DIYsplay. This works absolutely fine, however bear in mind that any serial commands received or sent on that line will be shared with the DIYsplay. You may see some weird characters in the Serial console when a DIYsplay function is called. You may also inadvertently send a valid command to the DIYsplay, causing unexpected behaviour.
 
-*Bottom Line: If you're planning to use the hardware Serial line for anything important, you should use the DIYsplay on a different line.* You can do this if your board has an additional HardwareSerial line like on the Arduino Mega, or use a library like ```AltSoftSerial.h``` or ```SoftwareSerial.h``` as described [below](#custom-pinouts).
+*Bottom Line: If you're planning to use the hardware Serial line for anything important, you should use the DIYsplay on a different line.* You can do this if your board has additional HardwareSerial lines like on the Arduino Mega, or use a library like ```AltSoftSerial.h``` or ```SoftwareSerial.h``` as described [below](#custom-pinouts).
 
 
 ## Advanced Usage

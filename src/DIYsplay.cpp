@@ -62,18 +62,7 @@ uint8_t DIYsplay::getNumWidgets(Screen page) {
     return widgetLengths[page];
 }
 
-uint8_t widgetLengths[73] = {
-	0, 10, 20, 10, 12, 12, 4, 
-	10, 2, 4, 12, 8, 6, 8, 
-	4, 7, 4, 2, 8, 2, 6, 
-	6, 4, 4, 4, 8, 6, 4, 
-	2, 10, 2, 12, 12, 2, 6, 
-	6, 6, 4, 4, 2, 4, 4, 
-	4, 4, 2, 8, 8, 4, 2, 
-	6, 4, 4, 6, 4, 8, 6, 
-	4, 29, 10, 5, 2, 4, 4, 
-	6, 3, 3, 0, 6, 6, 0, 
-	16, 14, 4};
+
 
 //Use this command to set data to any widget on the DIYsplay screen.
 //The 'index' parameter determines which widget to set, starting at 0.

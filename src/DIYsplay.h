@@ -6,7 +6,7 @@
 
 #ifndef _DIYSPLAY_H_
 #define _DIYSPLAY_H_
-#endif
+
 
 //Ensure includes directory is okay
 #include "MatesController.h"
@@ -16,7 +16,7 @@
 #define DEFAULT_RESET_PIN 4
 
 //Please UNCOMMENT this line if you wish to use AltSoftSerial.
-#include "AltSoftSerial.h"
+//#include "AltSoftSerial.h"
 
 //This is an enumerated list that corresponds with the gauges programmed onto the DIYsplay.
 //The end-user enters the Enum directory which is implicitly casted to an Page number
@@ -115,7 +115,7 @@ class DIYsplay {
         void begin(HardwareSerial &serial,
              uint8_t sigPin = DEFAULT_SIG_PIN,
              uint8_t resetPin = DEFAULT_RESET_PIN);
-        
+
         //Only allow this constructor to be used if Software Serial is defined.
         #ifdef SoftwareSerial_h
         void begin(SoftwareSerial &serial, 
@@ -149,14 +149,26 @@ class DIYsplay {
         void clearText();
 
         uint8_t getNumWidgets(Screen);
+        uint8_t widgetLengths[73] = {
+                0, 10, 20, 10, 12, 12, 4, 
+                10, 2, 4, 12, 8, 6, 8, 
+                4, 7, 4, 2, 8, 2, 6, 
+                6, 4, 4, 4, 8, 6, 4, 
+                2, 10, 2, 12, 12, 2, 6, 
+                6, 6, 4, 4, 2, 4, 4, 
+                4, 4, 2, 8, 8, 4, 2, 
+                6, 4, 4, 6, 4, 8, 6, 
+                4, 29, 10, 5, 2, 4, 4, 
+                6, 3, 3, 0, 6, 6, 0, 
+                16, 14, 4};
 
     private:
 
         //Initializes interface with MatesController
         void init();
-        uint8_t widgetLengths[74];
+
 
         uint8_t sigPin;
         uint8_t resetPin;
 };
-
+#endif

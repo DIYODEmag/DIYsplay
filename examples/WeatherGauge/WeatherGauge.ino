@@ -36,7 +36,7 @@ void loop() {
   dht.temperature().getEvent(&event);
   if (!isnan(event.temperature)) {
     diysplay.setData(0,event.temperature);
-    //Note we need to times the reading by 10 as there is a decimal point here.
+    //Note we need to multiply the reading by 10 as there is a decimal point here.
     diysplay.setData(1,event.temperature*10);
   }
 

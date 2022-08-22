@@ -19,11 +19,11 @@ You'll first need to connect the DIYsplay to your Arduino board, which needs fou
 If you've made sure everything is in the right spot, feel free to turn on your Arduino and ensure that the DIYsplay logo appears on the DIYsplay. Great, let's write some code!
 
 ## Basic Usage
-> This guide assumes you have a DIYsplay, an Arduino Uno or equivalent and the Arduino IDE installed on your computer.
+> This guide assumes you have the Arduino IDE installed on your computer.
 
 DIYsplay has been built to make displaying your information of choice as simple as possible. To install the required Arduino library, head to ```Tools > Manage Libraries``` and search for ```DIYsplay``` in the Arduino IDE library manager. Click ```Install``` and click ```Yes``` if the Arduino IDE asks if you want to install dependency libraries.
 
-> The DIYsplay library is a wrapper for the MatesController library, which handles the underlying serial commands. This means that DIYsplay needs the "MatesController" library as a dependency.
+
 
 And boom! The code libraries you need are installed. Now time to set up a basic screen. You can follow this code guide, or you can experiment with our pre-made examples in ```File > Examples > DIYsplay```.
 
@@ -53,7 +53,7 @@ void setup() {
     diysplay.setScreen(DIGITAL_CLOCK);
 }
 ```
-The ```DIGITAL_CLOCK``` text can be replaced with whatever screen you want to display on the DIYsplay. A full list can be found on the [Screens](#diysplay) page, which also includes previews and how to use each one. <!--- ?? TODO: UPDATE SCREENS LINK -->
+The ```DIGITAL_CLOCK``` text can be replaced with whatever screen you want to display on the DIYsplay. A full list can be found on the [Screens](screens.md) page, which also includes previews and how to use each one.
 
 Okay, let's display a time on the screen. To begin with, lets just put a single time on the screen. It won't count, but it's a start.
 ```C++
@@ -65,7 +65,7 @@ void setup() {
 }
 ```
 
-The last two lines of code use the ```setData()``` function to update data on the current screen. The first number in the brackets is the 'index' of the widget we want to change. Some pages have 1 or 2 widgets, while some have more than 10. Again, full information about these can all be found on the [Screens](#diysplay)<!--- ?? TODO: UPDATE SCREENS LINK --> page. If a page has one or more widget, it's first widget will have an index of 0, then the second will have an index of 1, and so forth.
+The last two lines of code use the ```setData()``` function to update data on the current screen. The first number in the brackets is the 'index' of the widget we want to change. Some pages have 1 or 2 widgets, while some have more than 10. Again, full information about these can all be found on the [Screens](screens.md) page. If a page has one or more widget, it's first widget will have an index of 0, then the second will have an index of 1, and so forth.
 
 In this case, we're modifying the first widget (Index 0) and and second widget (Index 1) to display ```4``` and ```30``` respectively. There we go, we're now displaying ```4:30``` on the screen. Assuming your Arduino is connected, just hit the Upload button and you're good to go.
 
@@ -78,6 +78,7 @@ The DIYsplay library, by default, uses this hardware serial line to talk to the 
 
 
 ## Advanced Usage
+> The DIYsplay library is a wrapper for the MatesController library, which handles the underlying serial commands. This means that DIYsplay needs the "MatesController" library as a dependency.
 
 ### Custom Pinouts
 DIYsplay supports customizing all pins used for the hardware interface. We have included multiple constructors for default pinouts, or changing them to a custom configuration. Note that we have not tested using every pin on every Arduino-compatible board, so we cannot guarantee full compatibility with all setups.

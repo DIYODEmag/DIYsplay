@@ -19,11 +19,11 @@ You'll first need to connect the DIYsplay to your Arduino board, which needs fou
 If you've made sure everything is in the right spot, feel free to turn on your Arduino and ensure that the DIYsplay logo appears on the DIYsplay. Great, let's write some code!
 
 ## Basic Usage
-> This guide assumes you have a DIYsplay, an Arduino Uno or equivalent and the Arduino IDE installed on your computer.
+> This guide assumes you have the Arduino IDE installed on your computer.
 
 DIYsplay has been built to make displaying your information of choice as simple as possible. To install the required Arduino library, head to ```Tools > Manage Libraries``` and search for ```DIYsplay``` in the Arduino IDE library manager. Click ```Install``` and click ```Yes``` if the Arduino IDE asks if you want to install dependency libraries.
 
-> The DIYsplay library is a wrapper for the MatesController library, which handles the underlying serial commands. This means that DIYsplay needs the "MatesController" library as a dependency.
+
 
 And boom! The code libraries you need are installed. Now time to set up a basic screen. You can follow this code guide, or you can experiment with our pre-made examples in ```File > Examples > DIYsplay```.
 
@@ -78,6 +78,7 @@ The DIYsplay library, by default, uses this hardware serial line to talk to the 
 
 
 ## Advanced Usage
+> The DIYsplay library is a wrapper for the MatesController library, which handles the underlying serial commands. This means that DIYsplay needs the "MatesController" library as a dependency.
 
 ### Custom Pinouts
 DIYsplay supports customizing all pins used for the hardware interface. We have included multiple constructors for default pinouts, or changing them to a custom configuration. Note that we have not tested using every pin on every Arduino-compatible board, so we cannot guarantee full compatibility with all setups.

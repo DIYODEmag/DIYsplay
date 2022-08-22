@@ -53,7 +53,7 @@ void setup() {
     diysplay.setScreen(DIGITAL_CLOCK);
 }
 ```
-The ```DIGITAL_CLOCK``` text can be replaced with whatever screen you want to display on the DIYsplay. A full list can be found on the [Screens](#diysplay) page, which also includes previews and how to use each one. <!--- ?? TODO: UPDATE SCREENS LINK -->
+The ```DIGITAL_CLOCK``` text can be replaced with whatever screen you want to display on the DIYsplay. A full list can be found on the [Screens](screens.md) page, which also includes previews and how to use each one.
 
 Okay, let's display a time on the screen. To begin with, lets just put a single time on the screen. It won't count, but it's a start.
 ```C++
@@ -65,7 +65,7 @@ void setup() {
 }
 ```
 
-The last two lines of code use the ```setData()``` function to update data on the current screen. The first number in the brackets is the 'index' of the widget we want to change. Some pages have 1 or 2 widgets, while some have more than 10. Again, full information about these can all be found on the [Screens](#diysplay)<!--- ?? TODO: UPDATE SCREENS LINK --> page. If a page has one or more widget, it's first widget will have an index of 0, then the second will have an index of 1, and so forth.
+The last two lines of code use the ```setData()``` function to update data on the current screen. The first number in the brackets is the 'index' of the widget we want to change. Some pages have 1 or 2 widgets, while some have more than 10. Again, full information about these can all be found on the [Screens](screens.md) page. If a page has one or more widget, it's first widget will have an index of 0, then the second will have an index of 1, and so forth.
 
 In this case, we're modifying the first widget (Index 0) and and second widget (Index 1) to display ```4``` and ```30``` respectively. There we go, we're now displaying ```4:30``` on the screen. Assuming your Arduino is connected, just hit the Upload button and you're good to go.
 

@@ -58,6 +58,11 @@ void DIYsplay::setScreen(int page) {
     currentScreen = page;
 }
 
+void DIYsplay::setScreen(Screen screen) {
+    mates.setPage(screen);
+    currentScreen = screen;
+}
+
 uint8_t DIYsplay::getNumWidgets(Screen page) {
     return widgetLengths[page];
 }

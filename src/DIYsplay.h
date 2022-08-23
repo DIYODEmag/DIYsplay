@@ -171,7 +171,7 @@ public:
       * @param screen pass in an index number that corresponds to the desired screen.
       *
       */
-     void setScreen(int screen);
+     //void setScreen(uint16_t screen);
 
      /**
       * @brief Set the currently displayed screen.
@@ -180,14 +180,16 @@ public:
       */
      void setScreen(Screen screen);
 
+     void setScreen(uint16_t screen);
+
      // We're re-initializing this instance when the DIYsplay::begin() method
      // is called because Mates doesn't have a default constructor.
      // We set the correct parameters there.
      MatesController mates = MatesController(Serial);
      int currentScreen;
 
-     void setData(int, int);
-     void setData(int, String);
+     void setData(uint16_t, uint16_t);
+     void setData(uint16_t, String);
 
      void printText(String);
      void clearText();

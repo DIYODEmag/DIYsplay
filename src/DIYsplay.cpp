@@ -53,9 +53,8 @@ void DIYsplay::begin(AltSoftSerial &serial, uint8_t sigPin, uint8_t resetPin) {
 }
 #endif
 
-void DIYsplay::setScreen(int page) {
-    mates.setPage(page);
-    currentScreen = page;
+void DIYsplay::setScreen(uint16_t screen) {
+    setScreen((Screen)screen);
 }
 
 void DIYsplay::setScreen(Screen screen) {
@@ -71,7 +70,7 @@ uint8_t DIYsplay::getNumWidgets(Screen page) {
 
 //Use this command to set data to any widget on the DIYsplay screen.
 //The 'index' parameter determines which widget to set, starting at 0.
-void DIYsplay::setData(int index, int data) {
+void DIYsplay::setData(uint16_t index, uint16_t data) {
     // This is auto-generated mapping code that ensures each MATES widget is
     // mapped to a data index. This prevents the user having to remember the
     // individual indexes for each widget.
@@ -492,7 +491,7 @@ void DIYsplay::setData(int index, int data) {
 
 //Use this command to set data to any widget on the DIYsplay screen.
 //The 'index' parameter determines which widget to set, starting at 0.
-void DIYsplay::setData(int index, String data) {
+void DIYsplay::setData(uint16_t index, String data) {
     // This is auto-generated mapping code that ensures each MATES widget is
     // mapped to a data index. This prevents the user having to remember the
     // individual indexes for each widget.

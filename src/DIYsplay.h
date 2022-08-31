@@ -11,6 +11,9 @@
 #include "MatesController.h"
 #include "SoftwareSerial.h"
 
+#define DEFAULT_SS_RX_PIN 5
+#define DEFAULT_SS_TX_PIN 6
+
 #define DEFAULT_SIG_PIN 3
 #define DEFAULT_RESET_PIN 4
 
@@ -135,9 +138,23 @@ public:
 
 // Only allow this constructor to be used if Software Serial is defined.
 #ifdef SoftwareSerial_h
+
      /**
       * @brief Starts up communication with the DIYsplay over a SoftwareSerial connection.
-      * Note that you need to have included the SoftwareSerial library for this to work.
+      *
+      * @param rxPin The pin to receive on.
+      * @param txPin The pin to send on.
+      * @param sigPin The GPIO pin to be to used for the DIYsplay's SIG pin.
+      * @param resetPin The GPIO pin to be to used for the DIYsplay's RES (reset) pin.
+      */
+     void begin(uint8_t rxPin,
+                uint8_t txPin,
+                uint8_t sigPin = DEFAULT_SIG_PIN,
+                uint8_t resetPin = DEFAULT_RESET_PIN);
+     
+
+     /**
+      * @brief Starts up communication with the DIYsplay over a SoftwareSerial connection.
       *
       * @param serial The SoftwareSerial instance to use.
       * @param sigPin The GPIO pin to be to used for the DIYsplay's SIG pin.
@@ -204,6 +221,7 @@ private:
 
      uint8_t sigPin;
      uint8_t resetPin;
+     SoftwareSerial ssSerialLine = SoftwareSerial(DEFAULT_SS_RX_PIN, DEFAULT_SS_TX_PIN);
 
      /*uint8_t widgetLengths[73] = {
          0, 10, 20, 10, 12, 12, 4,

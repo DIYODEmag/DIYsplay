@@ -11,10 +11,10 @@ You'll first need to connect the DIYsplay to your Arduino board, which needs fou
 |---------------|-------------|---|--------------|
 | **5V Power**  | 5V          | → | 5V           |
 | **Ground**    | GND         | → | G            |
-| **RX Line**   | RX (Pin 0)  | → | SW           |
-| **TX Line**   | TX (Pin 1)  | → | RX           |
 | **Sig Pin**   | D3 (Pin 3)  | → | SIG          |
 | **Reset Pin** | D4 (Pin 4)  | → | RES          |
+| **RX Line**   | D5 (Pin 5)  | → | SW           |
+| **TX Line**   | D6 (Pin 6)  | → | RX           |
 
 If you've made sure everything is in the right spot, feel free to turn on your Arduino and ensure that the DIYsplay logo appears on the DIYsplay. Great, let's write some code!
 
@@ -22,8 +22,6 @@ If you've made sure everything is in the right spot, feel free to turn on your A
 > This guide assumes you have the Arduino IDE installed on your computer.
 
 DIYsplay has been built to make displaying your information of choice as simple as possible. To install the required Arduino library, head to ```Tools > Manage Libraries``` and search for ```DIYsplay``` in the Arduino IDE library manager. Click ```Install``` and click ```Yes``` if the Arduino IDE asks if you want to install dependency libraries.
-
-
 
 And boom! The code libraries you need are installed. Now time to set up a basic screen. You can follow this code guide, or you can experiment with our pre-made examples in ```File > Examples > DIYsplay```.
 
@@ -72,10 +70,9 @@ In this case, we're modifying the first widget (Index 0) and and second widget (
 ## Display Communication
 The most popular Arduino-compatible boards (the Uno and the Nano), along with many others, have one primary hardware Serial line, of which messages can be printed to it with ```Serial.println("Hello world!");``` On the Arduino Uno, this is on Pin 0 (RX) and Pin 1 (TX).
 
-The DIYsplay library, by default, uses this hardware serial line to talk to the DIYsplay. This works absolutely fine, however bear in mind that any serial commands received or sent on that line will be shared with the DIYsplay. You may see some weird characters in the Serial console when a DIYsplay function is called. You may also inadvertently send a valid command to the DIYsplay, causing unexpected behaviour.
+The DIYsplay library, by default, _CAN_ be configured to use this line to talk to the DIYsplay. This works absolutely fine, however bear in mind that any serial commands received or sent on that line will be shared with the DIYsplay. You may see some weird characters in the Serial console when a DIYsplay function is called. You may also inadvertently send a valid command to the DIYsplay, causing unexpected behaviour.
 
-*Bottom Line: If you're planning to use the hardware Serial line for anything important, you should use the DIYsplay on a different line.* You can do this if your board has additional HardwareSerial lines like on the Arduino Mega, or use a library like ```AltSoftSerial.h``` or ```SoftwareSerial.h``` as described [below](#custom-pinouts).
-
+**So, the DIYsplay library uses the ```SoftwareSerial``` library by default on pins D5 and D6.** To use the HardwareSerial line instead (such as if you have a ATMega2560 board with multiple hardware serial lines), just call ```diysplay.begin(Serial)``` for the first line, ```diysplay.begin(Serial1)``` for the second line and so forth. This is beneficial if you do have spare serial lines to use as they have increased performance. Further information about custom pinouts can be found [below](#custom-pinouts).
 
 ## Advanced Usage
 > The DIYsplay library is a wrapper for the MatesController library, which handles the underlying serial commands. This means that DIYsplay needs the "MatesController" library as a dependency.

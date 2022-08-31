@@ -7,7 +7,7 @@
 #include "DIYsplay.h"
 
 DIYsplay::DIYsplay() {
-
+   
 }
 
 void DIYsplay::init() {
@@ -24,7 +24,13 @@ void DIYsplay::begin() {
     //called directly from the begin() method so it's not a huge deal.
     DIYsplay::sigPin = DEFAULT_SIG_PIN;
     DIYsplay::resetPin = DEFAULT_RESET_PIN;
-    mates = MatesController(Serial, resetPin);
+
+    //By default, we're using SoftwareSerial port to make communication more reliable.
+    //Shouldn't need to reinitialize this as we're doing so in our header file.
+    //DIYsplay::ssSerialLine = SoftwareSerial(DEFAULT_SS_RX_PIN, DEFAULT_SS_TX_PIN);
+
+
+    mates = MatesController(ssSerialLine, resetPin);
     DIYsplay::init();
 }
 
@@ -39,7 +45,16 @@ void DIYsplay::begin(HardwareSerial &serial, uint8_t sigPin, uint8_t resetPin) {
 void DIYsplay::begin(SoftwareSerial &serial, uint8_t sigPin, uint8_t resetPin) {
     DIYsplay::sigPin = sigPin;
     DIYsplay::resetPin = resetPin;
-    mates = MatesController(serial, resetPin);
+    ssSerialLine = serial;
+    mates = MatesController(ssSerialLine, resetPin);
+    DIYsplay::init();
+}
+
+void DIYsplay::begin(uint8_t rxPin, uint8_t txPin, uint8_t sigPin, uint8_t resetPin) {
+    DIYsplay::sigPin = sigPin;
+    DIYsplay::resetPin = resetPin;
+    ssSerialLine = SoftwareSerial(rxPin, txPin);
+    mates = MatesController(ssSerialLine, resetPin);
     DIYsplay::init();
 }
 #endif

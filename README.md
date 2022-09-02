@@ -67,10 +67,12 @@ The last two lines of code use the ```setData()``` function to update data on th
 
 In this case, we're modifying the first widget (Index 0) and and second widget (Index 1) to display ```4``` and ```30``` respectively. There we go, we're now displaying ```4:30``` on the screen. Assuming your Arduino is connected, just hit the Upload button and you're good to go.
 
+The following sections of this guide delve into some more detailed parts of the library, which you may wish to explore if you're more confident with Arduino boards. If not, feel free to explore other samples from the Arduino IDE by navigating to  ```File > Examples > DIYsplay```.
+
 ## Display Communication
 The most popular Arduino-compatible boards (the Uno and the Nano), along with many others, have one primary hardware Serial line, of which messages can be printed to it with ```Serial.println("Hello world!");``` On the Arduino Uno, this is on Pin 0 (RX) and Pin 1 (TX).
 
-The DIYsplay library, by default, _CAN_ be configured to use this line to talk to the DIYsplay. This works absolutely fine, however bear in mind that any serial commands received or sent on that line will be shared with the DIYsplay. You may see some weird characters in the Serial console when a DIYsplay function is called. You may also inadvertently send a valid command to the DIYsplay, causing unexpected behaviour.
+The DIYsplay library, _CAN_ be configured to use this line to talk to the DIYsplay. This works okay, however bear in mind that **any serial commands received or sent on that line will be shared with the DIYsplay**. You may see some weird characters in the Serial console when a DIYsplay function is called. You may also inadvertently send a valid command to the DIYsplay, causing unexpected behaviour.
 
 **So, the DIYsplay library uses the ```SoftwareSerial``` library by default on pins D5 and D6.** To use the HardwareSerial line instead (such as if you have a ATMega2560 board with multiple hardware serial lines), just call ```diysplay.begin(Serial)``` for the first line, ```diysplay.begin(Serial1)``` for the second line and so forth. This is beneficial if you do have spare serial lines to use as they have increased performance. Further information about custom pinouts can be found [below](#custom-pinouts).
 
@@ -80,16 +82,22 @@ The DIYsplay library, by default, _CAN_ be configured to use this line to talk t
 ### Custom Pinouts
 DIYsplay supports customizing all pins used for the hardware interface. We have included multiple constructors for default pinouts, or changing them to a custom configuration. Note that we have not tested using every pin on every Arduino-compatible board, so we cannot guarantee full compatibility with all setups.
 
-#### Hardware Serial
-The standard function that is called by default, even if no arguments are passed in (via another overload with no parameters). It assumes you are using Pin 0 and Pin 1 for the hardware Serial configuration.
-```C++
-void begin(HardwareSerial serial, uint8_t sigPin = 3, uint8_t resetPin = 4);
-```
+
 
 #### Software Serial
-Software Serial is much the same deal, just pass in an instance from your main code.
+The standard function that is called by default, even if no arguments are passed in (via another overload with no parameters). It assumes you are using Pin 5 and Pin 6 for the hardware Serial configuration. You need to pass in a SoftwareSerial instance that has already been initialized.
 ```C++
 void begin(SoftwareSerial serial, uint8_t sigPin = 3, uint8_t resetPin = 4);
+```
+You can also just pass in what pins you want to use and let the library initialize the Software Serial interface for you:
+```C++
+void begin(uint8_t rxPin, uint8_t txPin, uint8_t sigPin = 3, uint8_t resetPin = 4);
+```
+
+#### Hardware Serial
+If you have a board with additional serial lines such as an Arduino Mega, it is suggested to use Hardware Serial like this instead.
+```C++
+void begin(HardwareSerial serial, uint8_t sigPin = 3, uint8_t resetPin = 4);
 ```
 
 #### AltSoftSerial

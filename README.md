@@ -89,6 +89,9 @@ The DIYsplay uses **four pins total** for communication. Alongside the regular s
 | 3 | SIG | The SIG pin is connected to the base of a transistor that either connects or disconnects the signal on the TX pin. See the pin below for a more detailed description of this functionality.
 | 4 | SW | The SW pin is connected to the emitter of the aforementioned transistor. The purpose of this is to **prevent the serial line being controlled by the DIYsplay while the Arduino is being programmed**. More info can be found in the [Transistor Switching](#transistor-switching) section.
 | 5, 6 | +5V | Circuit +5V. **3.3V also may work** depending on your configuration of communication pins.
+| 7 | TX | TX line on the DIYsplay.
+| 8 | RX | RX line on the DIYsplay.
+| 10 | RES | Reset line - this pin is important to be connected regardless of your configuration. When low, it prevents the DIYsplay from turning on. Once brought high again, it turns on the DIYsplay and will sync the communication once it starts.
 
 ### Transistor Switching
 On the Hardware Serial line of the very common Arduino Nano or Uno, Pins 0 (RX) and 1 (TX) are directly connected to the Serial line responsible for programming the chip.

@@ -1,5 +1,5 @@
 /*
- * SimpleCounter.ino
+ * 01-SimpleCounter.ino
  * Author: Liam Davies (l.davies@diyodemag.com)
  * Copyright (c) 2022 DIYODE Magazine
  */

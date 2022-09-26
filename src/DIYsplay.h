@@ -163,6 +163,9 @@ public:
      void begin(SoftwareSerial &serial,
                 uint8_t sigPin = DEFAULT_SIG_PIN,
                 uint8_t resetPin = DEFAULT_RESET_PIN);
+
+     void listen();
+     void stopListening();
 #endif
 
 // Only allow this constructor to be used if AltSoftSerial is defined.
@@ -212,16 +215,18 @@ public:
      void clearText();
 
      uint8_t getNumWidgets(Screen);
+
+     
      
 
 
 private:
      // Initializes interface with MatesController
      void init();
-
+     SoftwareSerial ssSerialLine = SoftwareSerial(DEFAULT_SS_RX_PIN, DEFAULT_SS_TX_PIN);
      uint8_t sigPin;
      uint8_t resetPin;
-     SoftwareSerial ssSerialLine = SoftwareSerial(DEFAULT_SS_RX_PIN, DEFAULT_SS_TX_PIN);
+     
 
      /*uint8_t widgetLengths[73] = {
          0, 10, 20, 10, 12, 12, 4,

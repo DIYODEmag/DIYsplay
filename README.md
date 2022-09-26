@@ -70,11 +70,53 @@ In this case, we're modifying the first widget (Index 0) and and second widget (
 The following sections of this guide delve into some more detailed parts of the library, which you may wish to explore if you're more confident with Arduino boards. If not, feel free to explore other samples from the Arduino IDE by navigating to  ```File > Examples > DIYsplay```.
 
 ## Display Communication
+
+### Serial Lines
 The most popular Arduino-compatible boards (the Uno and the Nano), along with many others, have one primary hardware Serial line, of which messages can be printed to it with ```Serial.println("Hello world!");``` On the Arduino Uno, this is on Pin 0 (RX) and Pin 1 (TX).
 
 The DIYsplay library _CAN_ be configured to use this line to talk to the DIYsplay. This does work, however bear in mind that **any serial commands received or sent on that line will be shared with the DIYsplay**. You may see some weird characters in the Serial console when a DIYsplay function is called. You may also inadvertently send a valid command to the DIYsplay, causing unexpected behaviour.
 
 **So, the DIYsplay library uses the ```SoftwareSerial``` library by default on pins D5 and D6.** To use the HardwareSerial line instead (such as if you have a ATMega2560 board with multiple hardware serial lines), just call ```diysplay.begin(Serial)``` for the first line, ```diysplay.begin(Serial1)``` for the second line and so forth. This is beneficial if you do have spare serial lines to use as they have increased performance. Further information about custom pinouts can be found [below](#custom-pinouts).
+
+### Pin Connections
+
+The DIYsplay uses **four pins total** for communication. Alongside the regular set of RX and TX pins, DIYsplay also includes some other pins on the board to help with communciation. Not all have to be used, however it may make your life easier.
+
+| Pin Number | Pin Name | Description |
+| - | - | - |
+| 1, 9 | Ground | Circuit Ground. Connect to any reliable ground pin on your Arduino or within your circuit.
+| 2 | DTR | Data Terminal Ready. The average DIYsplay user should not need to worry about this pin, but if you are planning on uploading custom firmware to the DIYsplay ensure that this pin is connected to the programming board.
+| 3 | SIG | The SIG pin is connected to the base of a transistor that either connects or disconnects the signal on the TX pin. See the pin below for a more detailed description of this functionality.
+| 4 | SW | The SW pin is connected to the emitter of the aforementioned transistor. The purpose of this is to **prevent the serial line being controlled by the DIYsplay while the Arduino is being programmed**. More info can be found in the [Transistor Switching](#transistor-switching) section.
+| 5, 6 | +5V | Circuit +5V. **3.3V also may work** depending on your configuration of communication pins.
+
+### Transistor Switching
+On the Hardware Serial line of the very common Arduino Nano or Uno, Pins 0 (RX) and 1 (TX) are directly connected to the Serial line responsible for programming the chip.
+
+The TX line on the Arduino is fine to use, which is why we connect it directly to the RX pin on the DIYsplay. Since the Arduino's chip is the only driver of this pin, the DIYsplay doesn't care what state it's in until it's actually time to display some screens after bootup.
+
+The RX pin on the Arduino, however, is a different story. It is the only pin which receives data from the host computer or programming board, so if communication is interrupted, programming fails consistently. The bottom line is if we connect the DIYsplay's TX pin directly to the Arduino's RX pin, the DIYsplay's processor will either *forcefully pullup or pulldown the line, preventing programming of the Arduino*.
+
+Our solution to this is adding a small transistor between the RX pin on the Arduino and the TX pin on the DIYsplay processor. This transistor is controlled by the SIG pin, which is handled by the DIYsplay library automatically - it simply turns the pin on when the Arduino is ready to communicate with the DIYsplay.
+
+![TransistorSwitcher](./TransistorSwitcher.png)
+
+For sake of customisability, we've broken out the all three of the pins above on the DIYsplays 10 pin header. This may be convienient if you don't need to use this transistor arrangement for some reason, or if you want to optimise the pin usage.
+
+In fact, technically speaking, we don't need to use the transistor arrangement for the current implementation of the DIYsplay library either. We recently swapped to using the SoftwareSerial library for sake of convenience, so the inbuilt hardware Serial line should no longer interfere.
+
+The reason why we still recommend using this setup for beginners is for the simple reason that some boards may not have the hardware or software capability to run a SoftwareSerial line without additional headaches. In any case, if you want to talk to the DIYsplay with just three pins instead of four, and you're not concerned about Serial line interference, then use the below pinout. This should work fine for both Hardware and Software Serial, however testing will be required depending on your configuration.
+
+### Alternative 3-Pin Connection Table
+
+|               | Arduino Pin |   | DIYsplay Pin |
+|---------------|-------------|---|--------------|
+| **5V Power**  | 5V          | → | 5V           |
+| **Ground**    | GND         | → | G            |
+| **Reset Pin** | D4 (Pin 4)  | → | RES          |
+| **RX Line**   | D5 (Pin 5)  | → | TX           |
+| **TX Line**   | D6 (Pin 6)  | → | RX           |
+
 
 ## Advanced Usage
 > This section is still a work in progress. Information will be provided in future about how to program the DIYsplay firmware with your own screens.

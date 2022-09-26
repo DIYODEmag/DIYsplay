@@ -41,6 +41,14 @@ void DIYsplay::begin(HardwareSerial &serial, uint8_t sigPin, uint8_t resetPin) {
     DIYsplay::init();
 }
 
+void DIYsplay::listen() {
+    ssSerialLine.listen();
+}
+
+void DIYsplay::stopListening() {
+    ssSerialLine.stopListening();
+}
+
 #ifdef SoftwareSerial_h
 void DIYsplay::begin(SoftwareSerial &serial, uint8_t sigPin, uint8_t resetPin) {
     DIYsplay::sigPin = sigPin;
